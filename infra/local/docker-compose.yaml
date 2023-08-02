@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  local-db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: score
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./dbdata:/var/lib/mysql
+  local-db-migrate:
+    image: flyway/flyway:7
+    restart: always
+    environment:
+      - FLYWAY_DB_URL=jdbc:mysql://local-db/score
+      - FLYWAY_DB_USER=root
+      - FLYWAY_DB_PASSWORD=password
+    command: migrate
+    volumes:
+      - ../../db/flyway.conf:/flyway/conf/flyway.conf
+      - ../../db/migration:/flyway/sql

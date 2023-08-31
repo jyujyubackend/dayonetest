@@ -9,6 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.DockerComposeContainer;
+import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
 import java.io.File;
@@ -24,6 +25,8 @@ public class IntegrationTest {
 
     static DockerComposeContainer rdbms;
     static RedisContainer redis;
+
+    static LocalStackContainer aws;
 
     static {
         rdbms = new DockerComposeContainer(new File("infra/test/docker-compose.yaml"))
@@ -44,6 +47,11 @@ public class IntegrationTest {
 
         redis = new RedisContainer(RedisContainer.DEFAULT_IMAGE_NAME.withTag("6"));
         redis.start();
+
+        aws = (new LocalStackContainer())
+                .withServices(LocalStackContainer.Service.S3)
+                .withStartupTimeout(Duration.ofSeconds(600));
+        aws.start();
     }
 
     static class IntegrationTestInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
@@ -62,6 +70,20 @@ public class IntegrationTest {
 
             properties.put("spring.data.redis.host", redisHost);
             properties.put("spring.data.redis.port", redisPort.toString());
+
+            try {
+                aws.execInContainer(
+                        "awslocal",
+                        "s3api",
+                        "create-bucket",
+                        "--bucket",
+                        "test-bucket"
+                );
+
+                properties.put("aws.endpoint", aws.getEndpoint().toString());
+            } catch (Exception e) {
+                // ignore
+            }
 
             TestPropertyValues.of(properties)
                     .applyTo(applicationContext);

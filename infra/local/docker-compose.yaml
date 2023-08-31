@@ -25,3 +25,13 @@ services:
     image: redis:6
     ports:
       - 6379:6379
+  local-aws:
+    image: localstack/localstack:1.2
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - PORT_WEB_UI=4567
+      - AWS_DEFAULT_REGION=ap-northeast-2
+      - USE_SSL=0
+    ports:
+      - 4566:4566

@@ -1,6 +1,7 @@
 package com.jyujyu.dayonetest.service;
 
 import com.jyujyu.dayonetest.MyCalculator;
+import com.jyujyu.dayonetest.controller.ScoreApi;
 import com.jyujyu.dayonetest.controller.response.ExamFailStudentResponse;
 import com.jyujyu.dayonetest.controller.response.ExamPassStudentResponse;
 import com.jyujyu.dayonetest.model.*;

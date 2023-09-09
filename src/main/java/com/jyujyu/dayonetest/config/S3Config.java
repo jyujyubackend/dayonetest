@@ -1,4 +1,4 @@
-package com.jyujyu.dayonetest.service;
+package com.jyujyu.dayonetest.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

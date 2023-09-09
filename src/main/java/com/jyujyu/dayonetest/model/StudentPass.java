@@ -13,16 +13,17 @@ import lombok.NoArgsConstructor;
 @Table(name = "student_pass")
 @Entity
 public class StudentPass {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_pass_id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "student_pass_id")
+  private Long id;
 
-    @Column(name = "exam")
-    private String exam;
+  @Column(name = "exam")
+  private String exam;
 
-    @Column(name = "student_name")
-    private String studentName;
+  @Column(name = "student_name")
+  private String studentName;
 
-    @Column(name = "avg_score")
-    private Double avgScore;
+  @Column(name = "avg_score")
+  private Double avgScore;
 }

@@ -7,22 +7,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class RedisServiceTest extends IntegrationTest {
-    @Autowired
-    private RedisService redisService;
+  @Autowired private RedisService redisService;
 
-    @Test
-    @DisplayName("Redis Get / Set 테스트")
-    public void redisGetSetTest() {
-        // given
-        String expectValue = "hello";
-        String key = "hi";
+  @Test
+  @DisplayName("Redis Get / Set 테스트")
+  public void redisGetSetTest() {
+    // given
+    String expectValue = "hello";
+    String key = "hi";
 
-        // when
-        redisService.set(key, expectValue);
+    // when
+    redisService.set(key, expectValue);
 
-        // then
-        String actualValue = redisService.get(key);
+    // then
+    String actualValue = redisService.get(key);
 
-        Assertions.assertEquals(expectValue, actualValue);
-    }
+    Assertions.assertEquals(expectValue, actualValue);
+  }
 }

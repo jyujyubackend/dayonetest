@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class RedisService {
-    private final RedisTemplate<String, String> redisTemplate;
+  private final RedisTemplate<String, String> redisTemplate;
 
-    public String get(String key) {
-        return redisTemplate.opsForValue().get(key);
-    }
+  public String get(String key) {
+    return redisTemplate.opsForValue().get(key);
+  }
 
-    public void set(String key, String value) {
-        redisTemplate.opsForValue().set(key, value);
-    }
+  public void set(String key, String value) {
+    redisTemplate.opsForValue().set(key, value);
+  }
 }
